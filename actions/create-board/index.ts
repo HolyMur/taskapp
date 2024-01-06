@@ -8,15 +8,30 @@ import {createSafeAction} from "@/lib/create-safe-action";
 import {CreateBoard} from "@/actions/create-board/schema";
 
 const handler = async (data: InputType): Promise<ReturnType> => {
-    const { userId } = auth();
+    const { userId, orgId } = auth();
 
-    if(!userId){
+    if(!userId || !orgId){
         return {
             error: "Пользователь неавторизован.",
         }
     }
 
-    const { title } = data;
+    const { title, image } = data;
+
+    const [
+        imageId,
+        imageThumbUrl,
+        imageLinkHTML,
+        imageFullUrl,
+        imageUserName
+    ] = image.split("|")
+
+
+     if (!imageId || !imageThumbUrl || !imageFullUrl || !imageUserName || !imageLinkHTML) {
+        return {
+          error: "Переданы не все поля! Невозможно создать доску."
+        };
+      }
 
     let board;
 
@@ -24,6 +39,12 @@ const handler = async (data: InputType): Promise<ReturnType> => {
         board = await db.board.create({
             data: {
                 title,
+                orgId,
+                imageId,
+                imageThumbUrl,
+                imageFullUrl,
+                imageUserName,
+                imageLinkHTML
             }
         })
     } catch (e) {

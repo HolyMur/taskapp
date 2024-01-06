@@ -6,5 +6,9 @@ export const CreateBoard = z.object({
         invalid_type_error: "Название доски является необходимым полем.",
     }).min(3, {
         message: "Слишком маленькое название доски."
+    }),
+    image: z.string({
+        required_error: "Изображение обязательно.",
+        invalid_type_error: "Изображение обязательно."
     })
 })
