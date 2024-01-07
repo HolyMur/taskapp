@@ -42,11 +42,11 @@ export const NavItem = ({isExpanded, isActive, organization, onExpand}: NavItemP
             icon: <Settings className="h-4 w-4 mr-2" />,
             href: `/organization/${organization.id}/settings`
         },
-        {
+        /*{
             label: "Платежи",
             icon: <CreditCard className="h-4 w-4 mr-2" />,
             href: `/organization/${organization.id}/billing`
-        },
+        },*/
     ]
 
     const onClick = (href: string) => {
